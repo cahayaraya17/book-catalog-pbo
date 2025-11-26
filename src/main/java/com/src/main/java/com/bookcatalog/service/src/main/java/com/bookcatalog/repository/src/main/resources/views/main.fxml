@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" 
+      xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="com.bookcatalog.controller.MainController"
+      spacing="20" 
+      style="-fx-background-color: #f5f5f5;"
+      prefWidth="1000" 
+      prefHeight="600">
+   
+   <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+   
+   <!-- Header -->
+   <HBox spacing="20" alignment="CENTER_LEFT">
+      <Label text="📚 Book Catalog" 
+             style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+      <Region HBox.hgrow="ALWAYS"/>
+      <Button text="+ Add New Book" 
+              style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold;"
+              onAction="#handleAddBook"/>
+   </HBox>
+   
+   <!-- Search Bar -->
+   <HBox spacing="10" alignment="CENTER_LEFT">
+      <TextField fx:id="searchField" 
+                 promptText="Search books by title, author, or genre..." 
+                 prefWidth="300"
+                 onKeyReleased="#handleSearch"/>
+      <Button text="Search" 
+              onAction="#handleSearch"
+              style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+      <Button text="Clear" 
+              onAction="#handleClearSearch"
+              style="-fx-background-color: #95a5a6; -fx-text-fill: white;"/>
+   </HBox>
+   
+   <!-- Content Area -->
+   <HBox spacing="20" VBox.vgrow="ALWAYS">
+      
+      <!-- Sidebar - Filters -->
+      <VBox spacing="15" prefWidth="200" style="-fx-background-color: white; -fx-padding: 15; -fx-border-radius: 5;">
+         <Label text="Filters" style="-fx-font-weight: bold; -fx-font-size: 16px;"/>
+         
+         <Label text="Genre:"/>
+         <ComboBox fx:id="genreFilter" promptText="All Genres" onAction="#handleGenreFilter"/>
+         
+         <Label text="Rating:"/>
+         <ComboBox fx:id="ratingFilter" promptText="All Ratings" onAction="#handleRatingFilter">
+            <items>
+               <FXCollections fx:factory="observableArrayList">
+                  <String fx:value="5 Stars"/>
+                  <String fx:value="4+ Stars"/>
+                  <String fx:value="3+ Stars"/>
+               </FXCollections>
+            </items>
+         </ComboBox>
+         
+         <Separator/>
+         
+         <Label text="Statistics" style="-fx-font-weight: bold;"/>
+         <VBox spacing="5">
+            <Label fx:id="totalBooksLabel" text="Total Books: 0"/>
+            <Label fx:id="averageRatingLabel" text="Average Rating: 0.0"/>
+         </VBox>
+      </VBox>
+      
+      <!-- Main Content - Book Grid -->
+      <ScrollPane fitToWidth="true" HBox.hgrow="ALWAYS">
+         <GridView fx:id="booksGrid" prefWidth="700">
+            <!-- Books will be dynamically added here -->
+         </GridView>
+      </ScrollPane>
+   </HBox>
+   
+</VBox>
